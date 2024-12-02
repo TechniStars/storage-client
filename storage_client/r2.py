@@ -1,6 +1,6 @@
 import boto3
 import os
-from s3_base import S3BaseStorage
+from .s3_base import S3BaseStorage
 from typing import Optional
 
 

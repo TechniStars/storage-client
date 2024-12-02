@@ -3,7 +3,7 @@ from typing import List, Optional, Dict
 
 from botocore.exceptions import ClientError
 
-from storage_interface import StorageInterface
+from .storage_interface import StorageInterface
 
 
 class S3BaseStorage(StorageInterface):
