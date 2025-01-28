@@ -18,7 +18,8 @@ class S3BaseStorage(StorageInterface):
         """
         self.client = client
 
-    def upload_file(self, local_fpath: str, bucket_name: str, fpath_in_bucket: Optional[str] = None) -> tuple[str, str]:
+    def upload_file(self, local_fpath: str, bucket_name: str, fpath_in_bucket: Optional[str] = None,
+                    extra_args: Optional[dict] = None) -> tuple[str, str]:
         """
         Upload a local file to S3-based storage.
 
@@ -36,9 +37,11 @@ class S3BaseStorage(StorageInterface):
         """
         if fpath_in_bucket is None:
             fpath_in_bucket = os.path.basename(local_fpath)
+        if extra_args is None:
+            extra_args = {}
 
         try:
-            self.client.upload_file(local_fpath, bucket_name, fpath_in_bucket)
+            self.client.upload_file(local_fpath, bucket_name, fpath_in_bucket, ExtraArgs=extra_args)
             return fpath_in_bucket, self._get_storage_url(bucket_name, fpath_in_bucket)
         except ClientError as e:
             raise Exception(f"Upload failed: {str(e)}")
